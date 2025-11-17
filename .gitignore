@@ -34,3 +34,16 @@ build/
 *.iml
 out/
 
+# Gradle
+.gradle/
+
+# Build output
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Test resources (если здесь только тестовые файлы среды)
+src/test/resources/
+
