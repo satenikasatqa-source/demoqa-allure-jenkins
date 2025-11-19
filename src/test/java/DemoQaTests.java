@@ -28,8 +28,7 @@ public class DemoQaTests {
         $("#lastName").setValue("Ivanova");
         $("#userEmail").setValue("tester@gmail.com");
         $("#genterWrapper").$(byText("Female")).click();
-
-        $("#userNumber").setValue("9876543210");
+        пш$("#userNumber").setValue("9876543210");
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("January");
         $(".react-datepicker__year-select").selectOption("1980");
@@ -59,7 +58,7 @@ public class DemoQaTests {
                 .shouldHave(text("For DemoQaTests.jpeg"))
                 .shouldHave(text("NCR Noida"));
 
-        sleep(5000L);
+
 
 
 
