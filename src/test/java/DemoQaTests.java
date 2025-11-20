@@ -48,15 +48,17 @@ public class DemoQaTests {
 
 
         $(".table-responsive table")
-                .shouldHave(text("Ivana"))
-                .shouldHave(text("Ivanova"))
+                .shouldHave(text("Ivana Ivanova"))
+                .shouldHave(text("tester@gmail.com"))
                 .shouldHave(text("Female"))
+                .shouldHave(text("9876543210"))
                 .shouldHave(text("06 January,1980"))
                 .shouldHave(text("Physics"))
                 .shouldHave(text("Reading"))
                 .shouldHave(text("Yerevan some street"))
-                .shouldHave(text("For DemoQaTests.jpeg"))
+                .shouldHave(text("ForDemoQaTests.jpeg"))
                 .shouldHave(text("NCR Noida"));
+
 
 
 
