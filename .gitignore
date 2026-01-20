@@ -33,5 +33,7 @@ build/
 .idea/
 *.iml
 out/
+!gradle/wrapper/gradle-wrapper.jar
+
 
 
