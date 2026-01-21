@@ -3,6 +3,9 @@ plugins {
     id 'io.qameta.allure' version '2.11.2'
 }
 
+group = 'com.demoqa'
+version = '1.0-SNAPSHOT'
+
 repositories { mavenCentral() }
 
 def allureVersion = "2.21.0"
@@ -19,11 +22,27 @@ allure {
 
 dependencies {
     testImplementation "com.codeborne:selenide:7.9.4"
+
     testImplementation "io.qameta.allure:allure-selenide:$allureVersion"
+
     testImplementation "org.junit.jupiter:junit-jupiter:5.10.0"
+    testRuntimeOnly  "org.junit.jupiter:junit-jupiter-engine:5.10.0"
+
     testImplementation "org.slf4j:slf4j-simple:2.0.7"
 }
 
-tasks.withType(Test) {
+test {
     useJUnitPlatform()
+
+    // чтобы в Jenkins удобно забирать отчёты
+    systemProperty "allure.results.directory", "${buildDir}/allure-results"
+
+    // прокидываем все -D параметры (remote, browser, threads и т.д.)
+    systemProperties(System.getProperties())
+
+    // (опционально) лог тестов в консоль
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "short"
+    }
 }
