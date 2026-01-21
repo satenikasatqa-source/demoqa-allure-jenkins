@@ -1,16 +1,10 @@
-# Compiled class files
+# ===== Java =====
 *.class
-
-# Log files
 *.log
+hs_err_pid*
+replay_pid*
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files
+# ===== Archives =====
 *.jar
 *.war
 *.nar
@@ -19,21 +13,26 @@
 *.tar.gz
 *.rar
 
-# JVM crash logs
-hs_err_pid*
-replay_pid*
-
-# Gradle
+# ===== Gradle =====
 .gradle/
-
-# Build output
 build/
-
-# IntelliJ IDEA
-.idea/
-*.iml
 out/
 !gradle/wrapper/gradle-wrapper.jar
 
+# ===== IntelliJ IDEA =====
+.idea/
+*.iml
+*.ipr
+*.iws
 
+# ===== Allure =====
+allure-results/
+allure-report/
 
+# ===== Test artifacts =====
+video/
+screenshots/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
