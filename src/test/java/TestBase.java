@@ -1,32 +1,27 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-
-import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        System.clearProperty("selenide.baseUrl");
-        Configuration.baseUrl = "https://demoqa.com";
-        System.setProperty("selenide.baseUrl", "https://demoqa.com");
-
         Configuration.browserSize = "1980x1080";
+        Configuration.baseUrl = "https://demoqa.com";
         Configuration.timeout = 60000;
 
-        SelenideLogger.addListener("allure", new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true));
+        // на будущее для Jenkins+Selenoid
+        String remote = System.getProperty("remote");
+        if (remote != null && !remote.isBlank()) {
+            Configuration.remote = remote;
+        }
     }
 
     @AfterEach
-    void afterEach() {
-        Attach.screenshotAs("Screenshot");
+    void addAttachments() {
+        Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        closeWebDriver();
+        Attach.addVideo();
     }
 }

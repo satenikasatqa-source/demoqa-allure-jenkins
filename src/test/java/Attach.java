@@ -35,6 +35,7 @@ public class Attach {
     }
 
     public static void addVideo() {
+        if (getSessionId() == null) return; // локально часто будет null/без видео
         String sessionId = getSessionId().toString();
         String videoHost = System.getProperty("videoHost", "https://selenoid.autotests.cloud");
         String videoUrl = videoHost + "/video/" + sessionId + ".mp4";
