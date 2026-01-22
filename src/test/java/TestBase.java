@@ -1,6 +1,13 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+
+import java.util.Map;
+import java.util.logging.Level;
 
 public class TestBase {
 
@@ -10,11 +17,21 @@ public class TestBase {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.timeout = 60000;
 
-        // на будущее для Jenkins+Selenoid
         String remote = System.getProperty("remote");
         if (remote != null && !remote.isBlank()) {
             Configuration.remote = remote;
         }
+
+        MutableCapabilities capabilities = new MutableCapabilities();
+
+        LoggingPreferences logs = new LoggingPreferences();
+        logs.enable(LogType.BROWSER, Level.ALL);
+        capabilities.setCapability("goog:loggingPrefs", logs);
+
+        capabilities.setCapability("selenoid:options",
+                Map.of("enableVNC", true, "enableVideo", true));
+
+        Configuration.browserCapabilities = capabilities;
     }
 
     @AfterEach
@@ -23,5 +40,7 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
+
+        Selenide.closeWebDriver();
     }
 }

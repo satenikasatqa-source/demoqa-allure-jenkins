@@ -34,13 +34,9 @@ dependencies {
 test {
     useJUnitPlatform()
 
-    // чтобы в Jenkins удобно забирать отчёты
     systemProperty "allure.results.directory", "${buildDir}/allure-results"
-
-    // прокидываем все -D параметры (remote, browser, threads и т.д.)
     systemProperties(System.getProperties())
 
-    // (опционально) лог тестов в консоль
     testLogging {
         events "passed", "skipped", "failed"
         exceptionFormat "short"
