@@ -6,6 +6,7 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -21,7 +22,7 @@ public class TestBase {
         String remote = System.getProperty("remote");
 
         if (remote != null && !remote.isBlank()) {
-            
+            // REMOTE (Selenoid)
             Configuration.remote = remote;
 
             MutableCapabilities capabilities = new MutableCapabilities();
@@ -36,15 +37,16 @@ public class TestBase {
             Configuration.browserCapabilities = capabilities;
 
         } else {
+            // LOCAL (Jenkins agent) — headless
             Configuration.headless = true;
 
             MutableCapabilities capabilities = new MutableCapabilities();
             capabilities.setCapability("goog:chromeOptions", Map.of(
-                    "args", new String[] {
+                    "args", List.of(
                             "--no-sandbox",
                             "--disable-dev-shm-usage",
                             "--window-size=1920,1080"
-                    }
+                    )
             ));
             Configuration.browserCapabilities = capabilities;
         }
