@@ -2,11 +2,10 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.ByteArrayInputStream;
-
-import static com.codeborne.selenide.WebDriverRunner.getSessionId;
-import static org.openqa.selenium.remote.HttpSessionId.getSessionId;
 
 public class Attach {
 
@@ -35,8 +34,10 @@ public class Attach {
     }
 
     public static void addVideo() {
-        if (getSessionId() == null) return; // локально часто будет null/без видео
-        String sessionId = getSessionId().toString();
+        WebDriver driver = WebDriverRunner.getWebDriver();
+        if (!(driver instanceof RemoteWebDriver)) return;
+
+        String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
         String videoHost = System.getProperty("videoHost", "https://selenoid.autotests.cloud");
         String videoUrl = videoHost + "/video/" + sessionId + ".mp4";
 
