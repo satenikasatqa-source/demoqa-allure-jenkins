@@ -13,25 +13,41 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
+        Configuration.browser = "chrome";
         Configuration.browserSize = "1980x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.timeout = 60000;
 
         String remote = System.getProperty("remote");
+
         if (remote != null && !remote.isBlank()) {
+            
             Configuration.remote = remote;
+
+            MutableCapabilities capabilities = new MutableCapabilities();
+
+            LoggingPreferences logs = new LoggingPreferences();
+            logs.enable(LogType.BROWSER, Level.ALL);
+            capabilities.setCapability("goog:loggingPrefs", logs);
+
+            capabilities.setCapability("selenoid:options",
+                    Map.of("enableVNC", true, "enableVideo", true));
+
+            Configuration.browserCapabilities = capabilities;
+
+        } else {
+            Configuration.headless = true;
+
+            MutableCapabilities capabilities = new MutableCapabilities();
+            capabilities.setCapability("goog:chromeOptions", Map.of(
+                    "args", new String[] {
+                            "--no-sandbox",
+                            "--disable-dev-shm-usage",
+                            "--window-size=1920,1080"
+                    }
+            ));
+            Configuration.browserCapabilities = capabilities;
         }
-
-        MutableCapabilities capabilities = new MutableCapabilities();
-
-        LoggingPreferences logs = new LoggingPreferences();
-        logs.enable(LogType.BROWSER, Level.ALL);
-        capabilities.setCapability("goog:loggingPrefs", logs);
-
-        capabilities.setCapability("selenoid:options",
-                Map.of("enableVNC", true, "enableVideo", true));
-
-        Configuration.browserCapabilities = capabilities;
     }
 
     @AfterEach
